@@ -1,70 +1,103 @@
-# Getting Started with Create React App
+# Blog pessoal
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Blog estático em React. Os posts são arquivos Markdown deste repositório:
+nenhuma API, banco de dados ou autenticação é necessária para executar o site.
 
-## Available Scripts
+## Rodar e gerar o site
 
-In the project directory, you can run:
+```powershell
+npm ci
+npm start
+```
 
-### `npm start`
+O front roda em http://localhost:3000. Para gerar a versão para hospedagem estática:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+```powershell
+npm run build
+```
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Publique a pasta `build` em uma hospedagem estática. Cada publicação nova exige
+um novo build; um deploy automático conectado ao Git pode fazer isso após o push.
+O Dockerfile abaixo está preparado para Railway. O serviço na plataforma e a
+conexão com o GitHub precisam ser configurados na sua conta.
 
-### `npm test`
+## Deploy no Railway
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+1. Faça commit e push dos arquivos do front, incluindo Dockerfile, `docker`,
+   `scripts`, `content`, `src`, `public` e o lockfile.
+2. No Railway, crie um serviço a partir do repositório GitHub do front.
+3. Se conectar o repositório que contém os dois projetos, configure o Root
+   Directory como `/personal_blog_front`. Se o repositório já for o do front,
+   deixe o Root Directory no padrão.
+4. O Railway detecta o `Dockerfile`. Deixe Build Command e Start Command sem
+   substituições: a imagem já compila e inicia o servidor de produção.
+5. Em Networking, gere um domínio público. O Nginx escuta em `0.0.0.0` usando
+   a variável `PORT` fornecida pelo Railway. Não é preciso configurar banco,
+   volume ou variáveis de API.
 
-### `npm run build`
+O build gera os posts a partir dos Markdown e compila o React. A imagem final
+contém apenas Nginx e os arquivos estáticos. Novos commits na branch conectada
+podem disparar novos deploys com os posts atualizados. Nenhum health check
+periódico é configurado na imagem.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Referências: [Dockerfiles no Railway](https://docs.railway.com/builds/dockerfiles)
+e [comando de inicialização](https://docs.railway.com/deployments/start-command).
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Testar o container localmente
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```powershell
+docker build -t personal-blog .
+docker run --rm -p 8080:8080 -e PORT=8080 personal-blog
+```
 
-### `npm run eject`
+Abra http://localhost:8080. Para outra porta interna, passe `PORT` e ajuste o
+mapeamento: `docker run --rm -p 8080:9090 -e PORT=9090 personal-blog`.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## Escrever uma publicação
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+1. Copie `content/posts/_template.md` para `content/posts/nome-do-post.md`.
+2. Use um nome único, sem espaços ou acentos: ele será o endereço do post.
+3. Preencha `title`, `subtitle`, `category`, `date` e `tags` no cabeçalho YAML.
+4. Escreva o texto em Markdown abaixo do segundo `---`.
+5. Mude `draft: true` para `draft: false`, confira o site, faça commit e push.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Categorias disponíveis: `programacao`, `investimentos` e `jogos`.
+Use `date` no formato `YYYY-MM-DD`: é a data de escrita, preservada independente
+do fuso do visitante. Hashtags são uma lista em `tags`, sem `#` e sem espaços.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+O template nunca aparece no blog: arquivos começando com `_` são ignorados.
+Publicações com `draft: true` também são ignoradas. Os campos dos posts publicados
+são conferidos durante a geração para avisar sobre erros de preenchimento.
+Isso é uma verificação de formato, sem fluxo de login ou autorização.
 
-## Learn More
+Markdown aceita títulos, listas, links, imagens, citações, tabelas e blocos de código.
+HTML embutido é desabilitado. Para imagens locais, coloque-as em `public/images`
+e use `![Descrição](/images/arquivo.png)` no texto.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+A geração acontece antes de `npm start`, `npm test` e `npm run build`. Se editar
+os Markdown com o servidor aberto, rode `npm run posts:generate` em outro terminal
+ou reinicie o servidor. Não edite `src/generated/posts.json`: é um arquivo gerado
+que não deve ser versionado.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Interface
 
-### Code Splitting
+O header reúne o logo, Programação, Investimentos, Jogos e o switch de tema.
+Os tópicos filtram a lista; o logo mostra todos os posts. A lista é agrupada por
+ano e mês, do mais recente para o mais antigo, e mostra data, título, subtítulo e hashtags.
+Clicar abre a publicação completa em `/#posts/nome-do-post`, com suporte a
+recarregar a página, compartilhar o endereço e voltar pelo histórico do navegador.
+Voltar à lista preserva a seção selecionada.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+O tema segue inicialmente o dispositivo; sem preferência usa escuro. A escolha
+manual feita pelo switch fica salva no navegador.
 
-### Analyzing the Bundle Size
+## Testes
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+```powershell
+npm run test:content
+npm test -- --watchAll=false --runInBand
+npm run build
+```
 
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+A publicação depende das permissões de escrita no repositório e de acesso ao deploy.
+Os visitantes recebem apenas os arquivos estáticos gerados.

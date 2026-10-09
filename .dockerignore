@@ -1,0 +1,10 @@
+.git
+node_modules
+build
+coverage
+.cache
+src/generated
+.env
+.env.*
+*.log
+README.md
