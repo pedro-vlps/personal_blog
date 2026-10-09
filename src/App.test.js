@@ -32,7 +32,7 @@ test('os tópicos filtram posts e o logo retorna à lista completa', () => {
     expect(screen.getAllByRole('heading', { level: 4 })).toHaveLength(1);
     expect(screen.getByRole('heading', { name: title })).toBeInTheDocument();
   }
-  fireEvent.click(screen.getByRole('link', { name: 'Blog pessoal — todos os posts' }));
+  fireEvent.click(screen.getByRole('link', { name: 'PedroNauta — todos os posts' }));
   expect(screen.getAllByRole('heading', { level: 4 })).toHaveLength(3);
 });
 

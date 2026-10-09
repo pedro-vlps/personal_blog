@@ -1,4 +1,4 @@
-# Blog pessoal
+# PedroNauta
 
 Blog estático em React. Os posts são arquivos Markdown deste repositório:
 nenhuma API, banco de dados ou autenticação é necessária para executar o site.

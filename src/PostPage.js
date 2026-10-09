@@ -10,9 +10,9 @@ export function PostTags({ tags = [] }) {
 export default function PostPage({ post, onBack }) {
   const heading = useRef(null);
   useEffect(() => {
-    document.title = post ? `${post.title} · Blog pessoal` : 'Post não encontrado · Blog pessoal';
+    document.title = post ? `${post.title} · PedroNauta` : 'Post não encontrado · PedroNauta';
     heading.current?.focus();
-    return () => { document.title = 'Blog pessoal'; };
+    return () => { document.title = 'PedroNauta'; };
   }, [post]);
 
   return (

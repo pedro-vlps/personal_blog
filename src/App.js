@@ -56,11 +56,11 @@ function App({ posts = publishedPosts }) {
     <div className="blog">
       <header className="blog-header">
         <div className="header-inner">
-          <a className="blog-logo" href="/" aria-label="Blog pessoal — todos os posts" onClick={event => { event.preventDefault(); setSection(null); navigate(); }}>
+          <a className="blog-logo" href="/" aria-label="PedroNauta — todos os posts" onClick={event => { event.preventDefault(); setSection(null); navigate(); }}>
             <svg viewBox="0 0 32 32" width="32" height="32" fill="none" aria-hidden="true">
               <path d="M16 8C12 5 7 5 3 6v20c4-1 9-1 13 2 4-3 9-3 13-2V6c-4-1-9-1-13 2Zm0 0v20" stroke="currentColor" strokeWidth="2" strokeLinejoin="round" />
             </svg>
-            <span>Blog pessoal<span className="logo-dot">.</span></span>
+            <span>PedroNauta</span>
           </a>
           <nav className="blog-topics" aria-label="Seções do blog">
             {sections.map(topic => (

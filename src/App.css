@@ -1,7 +1,7 @@
 .blog-header { border-bottom: 1px solid var(--border); }
 .header-inner { max-width: 1200px; margin: 0 auto; padding: 20px 28px; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 24px; }
 .blog-logo { display: inline-flex; align-items: center; gap: 10px; width: fit-content; text-decoration: none; color: var(--text); font-family: Georgia, serif; font-size: 24px; white-space: nowrap; }
-.blog-logo svg, .logo-dot { color: var(--accent); }
+.blog-logo svg { color: var(--accent); }
 .blog-topics { display: flex; align-items: center; gap: 8px; }
 .blog-topics button { background: transparent; color: var(--muted); padding: 12px; font-size: 14px; min-height: 44px; border-bottom: 2px solid transparent; border-radius: 0; }
 .blog-topics button:hover { color: var(--text); background: var(--surface); }
