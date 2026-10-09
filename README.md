@@ -1,103 +1,217 @@
 # PedroNauta
 
-Blog estático em React. Os posts são arquivos Markdown deste repositório:
-nenhuma API, banco de dados ou autenticação é necessária para executar o site.
+Blog pessoal sobre **Programação, Investimentos e Jogos**, desenvolvido para
+registrar estudos, experiências e projetos em um lugar próprio.
 
-## Rodar e gerar o site
+O conteúdo é escrito em Markdown e versionado neste repositório. Durante o
+build, as publicações são convertidas em dados e HTML para uma interface React.
+O resultado é um site estático, servido com Nginx em produção, sem API ou banco de dados.
 
-```powershell
+## Funcionalidades
+
+- Publicações organizadas por ano e mês, das mais recentes para as mais antigas.
+- Filtros por Programação, Investimentos e Jogos.
+- Listagem com data, título, subtítulo e hashtags.
+- Página de leitura com suporte a Markdown, código, listas, imagens e tabelas.
+- Endereços individuais para compartilhar publicações.
+- Tema claro ou escuro, com preferência inicial do dispositivo e escolha salva no navegador.
+- Layout responsivo e navegação por teclado.
+- Dockerfile com build em etapas e suporte à porta dinâmica do Railway.
+
+## Tecnologias
+
+| Tecnologia | Uso |
+| --- | --- |
+| React 19 | Interface e navegação entre lista e publicações |
+| JavaScript e CSS | Componentes, comportamento e estilos |
+| Markdown + YAML | Texto e metadados das publicações |
+| markdown-it | Conversão do Markdown em HTML |
+| js-yaml | Leitura dos metadados |
+| Jest e Testing Library | Testes da interface e do tema |
+| Node.js Test Runner | Testes do gerador de publicações |
+| Docker e Nginx | Build e servidor de produção |
+
+O projeto utiliza `react-scripts` para o ambiente de desenvolvimento, testes e build.
+
+## Executar localmente
+
+### Pré-requisitos
+
+- **Node.js 24** e npm, alinhados à versão usada no Dockerfile.
+- **Git** para clonar o repositório.
+- **Docker**, caso queira executar a imagem de produção localmente.
+
+```bash
+git clone https://github.com/pedro-vlps/personal_blog.git
+cd personal_blog
 npm ci
 npm start
 ```
 
-O front roda em http://localhost:3000. Para gerar a versão para hospedagem estática:
+Acesse [localhost:3000](http://localhost:3000). Os comandos podem ser executados
+na raiz do repositório, inclusive no PowerShell. Não é necessário criar um `.env`.
+
+## Escrever uma publicação
+
+Os arquivos ficam em [`content/posts`](content/posts). Para começar, copie
+[`_template.md`](content/posts/_template.md) para um novo arquivo na mesma pasta:
 
 ```powershell
-npm run build
+Copy-Item content/posts/_template.md content/posts/meu-primeiro-post.md
 ```
 
-Publique a pasta `build` em uma hospedagem estática. Cada publicação nova exige
-um novo build; um deploy automático conectado ao Git pode fazer isso após o push.
-O Dockerfile abaixo está preparado para Railway. O serviço na plataforma e a
-conexão com o GitHub precisam ser configurados na sua conta.
+Em sistemas com shell Bash:
+
+```bash
+cp content/posts/_template.md content/posts/meu-primeiro-post.md
+```
+
+Preencha o cabeçalho YAML e escreva o texto abaixo do segundo `---`:
+
+````markdown
+---
+title: "Meu primeiro post"
+subtitle: "Uma apresentação do que quero compartilhar."
+category: "programacao"
+date: "2026-10-09"
+tags:
+  - react
+  - aprendizado
+draft: false
+---
+
+Uma introdução ao assunto, com **ênfase** e [links](https://example.com).
+
+## O que aprendi
+
+- Uma descoberta importante.
+- Um próximo passo para explorar.
+
+```javascript
+const mensagem = 'Olá, mundo!';
+console.log(mensagem);
+```
+````
+
+### Metadados
+
+| Campo | Formato |
+| --- | --- |
+| `title` | Título da publicação; texto obrigatório |
+| `subtitle` | Resumo exibido na listagem; texto obrigatório |
+| `category` | `programacao`, `investimentos` ou `jogos` |
+| `date` | Data de escrita entre aspas, no formato `YYYY-MM-DD` |
+| `tags` | Lista não vazia de hashtags, sem `#` ou espaços |
+| `draft` | `true` para rascunho; `false` para publicar |
+
+As hashtags aceitam letras, números, hífens e underscores. O nome do arquivo
+funciona como identificador: use letras minúsculas sem acentos, números e hífens.
+Por exemplo, `meu-primeiro-post.md` gera o endereço `/#posts/meu-primeiro-post`.
+Renomear um arquivo muda o endereço da publicação.
+
+Arquivos começando com `_`, incluindo o template, são ignorados pelo gerador.
+Rascunhos com `draft: true` também não entram no site. Se `draft` for omitido,
+o arquivo será tratado como uma publicação. A data de escrita é preservada
+independentemente do fuso do visitante.
+
+### Imagens e formatação
+
+Para imagens locais, coloque o arquivo em `public/images` e referencie-o no texto:
+
+```markdown
+![Descrição da imagem](/images/meu-projeto.png)
+```
+
+O Markdown suporta títulos, listas, citações, tabelas e blocos de código.
+HTML embutido é desabilitado. O título principal é exibido pela interface;
+comece as seções do texto com `##` para evitar repeti-lo.
+
+### Atualizar e publicar
+
+1. Edite o Markdown e confira os metadados.
+2. Rode os testes e `npm run build`.
+3. Faça commit e push dos arquivos da publicação.
+4. Publique o novo build ou aguarde o deploy da branch conectada à hospedagem.
+
+Com o servidor de desenvolvimento aberto, rode `npm run posts:generate` em
+outro terminal após editar ou adicionar um Markdown. O React recarrega os dados
+gerados. Reiniciar `npm start` também executa a geração.
+
+## Comandos
+
+| Comando | Descrição |
+| --- | --- |
+| `npm ci` | Instala as dependências conforme o lockfile |
+| `npm start` | Gera os posts e inicia o servidor de desenvolvimento |
+| `npm run posts:generate` | Atualiza os dados a partir dos Markdown |
+| `npm run test:content` | Testa leitura, metadados e renderização do conteúdo |
+| `npm test -- --watchAll=false --runInBand` | Executa os testes da interface e do tema |
+| `npm run build` | Gera os posts e compila a versão de produção |
+
+## Estrutura do projeto
+
+```text
+content/posts/               Publicações Markdown e template
+scripts/                     Gerador de publicações e seus testes
+src/                         Interface, estilos e testes React
+  generated/posts.json       Dados gerados automaticamente; não versionados
+public/                      HTML base, favicon e assets públicos
+docker/default.conf.template Configuração do Nginx
+Dockerfile                   Build React + servidor estático de produção
+package.json                 Dependências e comandos
+package-lock.json            Versões resolvidas das dependências
+```
+
+A geração ocorre antes de `start`, `test` e `build`. O gerador verifica os campos,
+ignora templates e rascunhos e produz `src/generated/posts.json`. A interface
+importa esse arquivo; nenhuma requisição a uma API é feita para carregar posts.
+
+Não edite o JSON gerado. As pastas `src/generated`, `build`, `node_modules` e os
+caches locais são ignorados pelo Git. Os Markdown e o lockfile devem ser versionados.
+
+## Produção com Docker
+
+```bash
+docker build -t pedronauta .
+docker run --rm -p 8080:8080 -e PORT=8080 pedronauta
+```
+
+Acesse [localhost:8080](http://localhost:8080). A etapa de build usa Node.js para
+instalar dependências, gerar as publicações e compilar o React. A imagem final
+contém Nginx e os arquivos estáticos, sem Node.js ou código de desenvolvimento.
+
+O Nginx escuta em `0.0.0.0` na porta definida por `PORT`, com padrão `8080`.
+Para testar outra porta interna:
+
+```bash
+docker run --rm -p 8080:9090 -e PORT=9090 pedronauta
+```
+
+O HTML usa cache com revalidação; os assets com hash recebem cache de longa duração.
 
 ## Deploy no Railway
 
-1. Faça commit e push dos arquivos do front, incluindo Dockerfile, `docker`,
-   `scripts`, `content`, `src`, `public` e o lockfile.
-2. No Railway, crie um serviço a partir do repositório GitHub do front.
-3. Se conectar o repositório que contém os dois projetos, configure o Root
-   Directory como `/personal_blog_front`. Se o repositório já for o do front,
-   deixe o Root Directory no padrão.
-4. O Railway detecta o `Dockerfile`. Deixe Build Command e Start Command sem
-   substituições: a imagem já compila e inicia o servidor de produção.
-5. Em Networking, gere um domínio público. O Nginx escuta em `0.0.0.0` usando
-   a variável `PORT` fornecida pelo Railway. Não é preciso configurar banco,
-   volume ou variáveis de API.
+1. Conecte este repositório a um serviço no Railway.
+2. Deixe o **Root Directory** na raiz do repositório.
+3. Use o `Dockerfile` detectado pela plataforma, sem substituir os comandos de build e inicialização.
+4. Gere um domínio público em **Networking**.
+5. Mantenha a branch de publicação conectada para novos deploys após o push.
 
-O build gera os posts a partir dos Markdown e compila o React. A imagem final
-contém apenas Nginx e os arquivos estáticos. Novos commits na branch conectada
-podem disparar novos deploys com os posts atualizados. Nenhum health check
-periódico é configurado na imagem.
+A variável `PORT` é fornecida pelo Railway e utilizada pelo Nginx. Este projeto
+não requer banco, volume persistente ou variáveis de API. O container não configura
+chamadas periódicas de health check.
+
+A pasta `build` também pode ser publicada diretamente em uma hospedagem estática.
+Os endereços dos posts usam hash, permitindo recarregar links sem configurar
+rotas individuais no servidor.
 
 Referências: [Dockerfiles no Railway](https://docs.railway.com/builds/dockerfiles)
 e [comando de inicialização](https://docs.railway.com/deployments/start-command).
 
-### Testar o container localmente
+## Autoria e contribuições
 
-```powershell
-docker build -t personal-blog .
-docker run --rm -p 8080:8080 -e PORT=8080 personal-blog
-```
+Projeto pessoal de [Pedro Vieira](https://github.com/pedro-vlps).
 
-Abra http://localhost:8080. Para outra porta interna, passe `PORT` e ajuste o
-mapeamento: `docker run --rm -p 8080:9090 -e PORT=9090 personal-blog`.
-
-## Escrever uma publicação
-
-1. Copie `content/posts/_template.md` para `content/posts/nome-do-post.md`.
-2. Use um nome único, sem espaços ou acentos: ele será o endereço do post.
-3. Preencha `title`, `subtitle`, `category`, `date` e `tags` no cabeçalho YAML.
-4. Escreva o texto em Markdown abaixo do segundo `---`.
-5. Mude `draft: true` para `draft: false`, confira o site, faça commit e push.
-
-Categorias disponíveis: `programacao`, `investimentos` e `jogos`.
-Use `date` no formato `YYYY-MM-DD`: é a data de escrita, preservada independente
-do fuso do visitante. Hashtags são uma lista em `tags`, sem `#` e sem espaços.
-
-O template nunca aparece no blog: arquivos começando com `_` são ignorados.
-Publicações com `draft: true` também são ignoradas. Os campos dos posts publicados
-são conferidos durante a geração para avisar sobre erros de preenchimento.
-Isso é uma verificação de formato, sem fluxo de login ou autorização.
-
-Markdown aceita títulos, listas, links, imagens, citações, tabelas e blocos de código.
-HTML embutido é desabilitado. Para imagens locais, coloque-as em `public/images`
-e use `![Descrição](/images/arquivo.png)` no texto.
-
-A geração acontece antes de `npm start`, `npm test` e `npm run build`. Se editar
-os Markdown com o servidor aberto, rode `npm run posts:generate` em outro terminal
-ou reinicie o servidor. Não edite `src/generated/posts.json`: é um arquivo gerado
-que não deve ser versionado.
-
-## Interface
-
-O header reúne o logo, Programação, Investimentos, Jogos e o switch de tema.
-Os tópicos filtram a lista; o logo mostra todos os posts. A lista é agrupada por
-ano e mês, do mais recente para o mais antigo, e mostra data, título, subtítulo e hashtags.
-Clicar abre a publicação completa em `/#posts/nome-do-post`, com suporte a
-recarregar a página, compartilhar o endereço e voltar pelo histórico do navegador.
-Voltar à lista preserva a seção selecionada.
-
-O tema segue inicialmente o dispositivo; sem preferência usa escuro. A escolha
-manual feita pelo switch fica salva no navegador.
-
-## Testes
-
-```powershell
-npm run test:content
-npm test -- --watchAll=false --runInBand
-npm run build
-```
-
-A publicação depende das permissões de escrita no repositório e de acesso ao deploy.
-Os visitantes recebem apenas os arquivos estáticos gerados.
+Sugestões e correções podem ser propostas por issues ou pull requests. Para
+alterações de código, execute os testes e o build antes de abrir um PR. As
+publicações são mantidas pelo autor e seguem o mesmo fluxo de revisão no Git.

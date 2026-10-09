@@ -13,7 +13,7 @@ afterEach(() => { localStorage.clear(); });
 
 test('lista o conteúdo real gerado sem publicar o template', () => {
   render(<App />);
-  expect(screen.getAllByRole('heading', { level: 4 })).toHaveLength(6);
+  expect(screen.queryAllByRole('heading', { level: 4 })).toHaveLength(publishedPosts.length);
   expect(publishedPosts.every(post => ['programacao', 'investimentos', 'jogos'].includes(post.category))).toBe(true);
   expect(screen.queryByText('Título da publicação')).not.toBeInTheDocument();
   expect(screen.queryByRole('button', { name: 'Generalidades' })).not.toBeInTheDocument();
