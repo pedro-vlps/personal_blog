@@ -11,6 +11,7 @@ const sections = [
   { id: 'programacao', label: 'Programação' },
   { id: 'investimentos', label: 'Investimentos' },
   { id: 'jogos', label: 'Jogos' },
+  { id: 'futebol', label: 'Futebol' },
 ];
 
 function App({ posts = publishedPosts }) {

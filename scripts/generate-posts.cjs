@@ -4,7 +4,7 @@ const yaml = require('js-yaml');
 const MarkdownIt = require('markdown-it');
 
 const markdown = new MarkdownIt({ html: false, linkify: true, typographer: true });
-const categories = new Set(['programacao', 'investimentos', 'jogos']);
+const categories = new Set(['programacao', 'investimentos', 'jogos', 'futebol']);
 
 function parsePost(source, filename) {
   if (path.basename(filename).startsWith('_')) return null;

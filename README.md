@@ -1,6 +1,6 @@
 # PedroNauta
 
-Blog pessoal sobre **Programação, Investimentos e Jogos**, desenvolvido para
+Blog pessoal sobre **Programação, Investimentos, Jogos e Futebol**, desenvolvido para
 registrar estudos, experiências e projetos em um lugar próprio.
 
 O conteúdo é escrito em Markdown e versionado neste repositório. Durante o
@@ -10,7 +10,7 @@ O resultado é um site estático, servido com Nginx em produção, sem API ou ba
 ## Funcionalidades
 
 - Publicações organizadas por ano e mês, das mais recentes para as mais antigas.
-- Filtros por Programação, Investimentos e Jogos.
+- Filtros por Programação, Investimentos, Jogos e Futebol.
 - Listagem com data, título, subtítulo e hashtags.
 - Página de leitura com suporte a Markdown, código, listas, imagens e tabelas.
 - Endereços individuais para compartilhar publicações.
@@ -99,7 +99,7 @@ console.log(mensagem);
 | --- | --- |
 | `title` | Título da publicação; texto obrigatório |
 | `subtitle` | Resumo exibido na listagem; texto obrigatório |
-| `category` | `programacao`, `investimentos` ou `jogos` |
+| `category` | `programacao`, `investimentos`, `jogos` ou `futebol` |
 | `date` | Data de escrita entre aspas, no formato `YYYY-MM-DD` |
 | `tags` | Lista não vazia de hashtags, sem `#` ou espaços |
 | `draft` | `true` para rascunho; `false` para publicar |
