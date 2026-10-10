@@ -26,7 +26,7 @@ provavelmente é júnior, um júnior deve usar IA? Quem regula isso?
 
 Pra não ficarmos só nos questionamentos eu cheguei em algumas conclusões:
 
-## - Usar como orientador
+## 1. Usar como orientador
 
 A parte mais importante de programar é sem dúvida a lógica de programação, porque apenas com ela você consegue resolver qualquer problema independente da linguagem.
 Eu estou a um semestre de terminar a minha faculdade de ciências da computação e posso dizer que na minha experiência, se não fosse o curso que eu fiz antes não saberia nada de
@@ -34,11 +34,11 @@ como programar um site, o curso é muito limitado e basicamente te apresenta alg
 mesma experiência em outros lugares. Sendo assim, uma forma que pode te ajudar muito no começo é usar a IA como um avaliador do seu código, dizendo aonde é possível melhorar, explicando conceitos, o que falta, como melhorar a estrutura do código e validando o que foi feito; óbvio que isso requer que você mais leia as respostas do que mande
 a IA fazer, mas no geral acredito que é um bom mecanismo pra ajudar a evoluir
 
-## - Usar como complemento
+## 2. Usar como complemento
 
 Existem tarefas que por mais que sejam chatas, requerem que você execute quantas vezes for possível para aprender, mas isso era muito necessário antes porque não existia uma maneira de pular essas etapas, ou você fazia ou não seria feito; mas nos dias de hoje a IA consegue pular muitas dessas etapas repetitivas do dia a dia, então se você já tiver conhecimento, por exemplo, de como criar um schema para uma API, ou como fazer uma query simples de banco, coisas do tipo, acredito que é uma boa forma de otimizar o seu tempo para estar cada vez mais lidando com problemas mais complexos e otimizando o seu aprendizado
 
-## - Usar para (MUUITTAA) pesquisa
+## 3. Usar para (MUUITTAA) pesquisa
 
 De fato, quando eu comecei, por diversas vezes um problema simples que eu não sabia resolver virava um problema porque eu não achava facilmente na internet, ou muitas das vezes não sabia nem como pesquisar, então seria muito egoísta da minha parte dizer simplesmente não use IA, eu acho que ela tem um papel fundamental no aprendizado, e cada vez mais esse aprendizado vai estar mais atrelado a saber o que está fazendo do que como está fazendo, a linguagem de programação deixou de ser uma barreira intransponível ou demorada de passar, dito tudo isso, fazer pesquisas sobre os problemas que você está lidando no dia a dia tem o potencial de acelerar o aprendizado, mas ainda existe um cuidado a ser tomado nesse caso, se todas as suas pesquisas forem feitas usando IA, pode ser que em algum momento ela acabe te limitando, por trazer respostas muito parecidas ou soluções enviesadas, então de vez em quando sair um pouco desse limite pode te fazer bem, exercer a sua criatividade para solução de problemas e usar uma ferramenta para resolver pra você é mais eficaz do que usar uma ferramenta para te dizer qual a melhor solução para o seu problema
 
