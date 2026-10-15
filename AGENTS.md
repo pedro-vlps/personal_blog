@@ -62,42 +62,23 @@ Write the commit body in English as well.
 - Run relevant checks and report their results before approval. If a command
   fails, stop the step and resolve the failure before proceeding.
 
-## 5. Version Generation
+## 5. Repository-Specific Policy: No Version Generation
 
-Every `bugfix`, `feature`, or `release` commit must generate a new version and
-record its changes in `CHANGELOG.md`.
+- This repository never requires version generation, regardless of commit type.
+  This permanent project exception replaces the global versioning defaults.
+- Do not increment versions, create version tags, or prepare release artifacts
+  as part of commits, including `bugfix`, `feature`, and `release` commits.
+- Preserve existing manifest and lockfile version fields. Their presence does
+  not imply a requirement to generate versions.
+- Keep this exception local to this repository; do not apply it to the global
+  Codex instructions or other projects.
 
-Use `MAJOR.MINOR.PATCH` with the increments from the original workflow:
+## 6. Change History
 
-| Commit type | Increment | Example |
-| --- | --- | --- |
-| `bugfix` | Patch | `1.2.3` → `1.2.4` |
-| `feature` | Minor, resetting patch | `1.2.3` → `1.3.0` |
-| `release` | Major, resetting minor and patch | `1.2.3` → `2.0.0` |
-
-- Check the current version in version files and repository tags. Resolve any
-  discrepancies before proposing the next version. Without a previous version,
-  use `0.0.0` as the base for the corresponding increment.
-- The initial version `0.0.1` from the original workflow may be prepared when
-  the user requests versioning initialization.
-- Update the version files and lockfiles applicable to the project's technology
-  consistently. Do not create files for unrelated technologies.
-- Include version and changelog updates in the same commit step that generated
-  them so all files are reviewed and approved together. Do not create additional
-  commits without specific approval.
-- After the approved commit, create its `vMAJOR.MINOR.PATCH` tag only if tag
-  creation was included in the approved proposal. Never overwrite existing tags.
-- `initial commit`, `build`, and `docs` do not generate versions automatically.
-
-## 6. Changelog
-
-- Create `CHANGELOG.md` at the project root if it does not exist.
-- Keep one `# Changelog` heading at the top and list the newest versions first,
-  preserving previous history.
-- Label each section `## vMAJOR.MINOR.PATCH - YYYY-MM-DD`, using the local date
-  when preparing the version.
-- Write simple English notes describing additions, fixes, or changes consistent
-  with the submitted step. Do not invent changes.
+- Use Git history to record changes. This repository does not require a
+  version-based changelog; do not create or update one as part of commits.
+- Preserve existing historical records if present. The no-versioning policy
+  does not authorize deleting previously committed history.
 
 ## 7. Publication
 

@@ -70,17 +70,27 @@ function App({ posts = publishedPosts }) {
               </button>
             ))}
           </nav>
-          <button
-            type="button"
-            className="theme-switch"
-            role="switch"
-            aria-checked={activeTheme === 'dark'}
-            aria-label="Modo escuro"
-            onClick={() => changeTheme(activeTheme === 'dark' ? 'light' : 'dark')}
-          >
-            <span>Modo escuro</span>
-            <span className="switch-track" aria-hidden="true"><span className="switch-thumb" /></span>
-          </button>
+          <div className="header-actions">
+            <a className="github-link" href="https://github.com/pedro-vlps" target="_blank" rel="noopener noreferrer" aria-label="GitHub de Pedro (abre em outra aba)" title="GitHub de Pedro">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true">
+                <path d="M12 .75a11.25 11.25 0 0 0-3.558 21.923c.563.104.77-.244.77-.543 0-.267-.01-.975-.015-1.914-3.13.68-3.791-1.508-3.791-1.508-.512-1.3-1.25-1.646-1.25-1.646-1.022-.699.078-.685.078-.685 1.13.08 1.725 1.16 1.725 1.16 1.005 1.722 2.638 1.225 3.28.937.103-.729.394-1.225.716-1.507-2.499-.284-5.126-1.25-5.126-5.565 0-1.23.44-2.233 1.16-3.02-.116-.285-.503-1.43.11-2.98 0 0 .945-.303 3.094 1.154A10.78 10.78 0 0 1 12 6.178c.956.005 1.92.13 2.82.38 2.148-1.457 3.09-1.154 3.09-1.154.616 1.55.229 2.695.113 2.98.722.787 1.158 1.79 1.158 3.02 0 4.325-2.631 5.278-5.138 5.557.404.35.765 1.042.765 2.1 0 1.516-.014 2.74-.014 3.112 0 .302.203.652.775.542A11.25 11.25 0 0 0 12 .75Z" />
+              </svg>
+            </a>
+            <button
+              type="button"
+              className="theme-switch"
+              role="switch"
+              aria-checked={activeTheme === 'dark'}
+              aria-label="Modo escuro"
+              title="Modo escuro"
+              onClick={() => changeTheme(activeTheme === 'dark' ? 'light' : 'dark')}
+            >
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M20.9 13.1A9 9 0 0 1 10.9 3.1a9 9 0 1 0 10 10Z" />
+              </svg>
+              <span className="switch-track" aria-hidden="true"><span className="switch-thumb" /></span>
+            </button>
+          </div>
         </div>
       </header>
       <main className="blog-main" aria-label={section ? sections.find(topic => topic.id === section).label : 'Todos os posts'}>
