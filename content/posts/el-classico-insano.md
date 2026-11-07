@@ -4,9 +4,9 @@ subtitle: "Que jogo fenomenal!!"
 category: "futebol"
 date: "2026-10-25"
 tags:
-  - el classico
-  - la liga
-  - real madrid
+  - el_classico
+  - la_liga
+  - real_madrid
   - barcelona
 draft: false
 ---
