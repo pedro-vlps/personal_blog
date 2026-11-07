@@ -1,6 +1,6 @@
 ---
-title: "El Clássoco insano"
-subtitle: "Que jogo fenomenal!!"
+title: "El Classico insano"
+subtitle: "Que jogo fenomenal!"
 category: "futebol"
 date: "2026-10-25"
 tags:
